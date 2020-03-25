@@ -5,14 +5,21 @@ export default function(containerRef) {
   return useLinking(containerRef, {
     prefixes: [Linking.makeUrl('/')],
     config: {
-      Root: {
-        path: 'root',
+      HomeStack: {
+        path: "stack",
+        initialRouteName: "Profile",
         screens: {
-          Home: 'home',
-          Links: 'links',
-          Settings: 'settings',
-        },
+          Home: "home",
+          Profile: {
+            path: "user/:id/:age",
+            parse: {
+              id: id => `there, ${id}`,
+              age: Number
+            }
+          }
+        }
       },
+      Settings: "settings"
     },
   });
 }
