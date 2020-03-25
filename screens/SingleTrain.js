@@ -15,12 +15,12 @@ export default function SingleTrain({
 	useEffect(() => {
 		navigation.setParams({ title });
 	}, []);
-	console.log(TrainStops[route.params?.train])
 	const currentTrain = route.params?.train;
 	return (
 		<ScrollView>
 			{Object.entries(TrainStops[currentTrain]).map(([key, value]) => (
 				<ListItem
+					onPress={() => navigation.navigate('SingleStation', { station: value })}
 					key={key}
 					leftAvatar={{ source: require('../assets/images/A.png') }}
 					title={value}
