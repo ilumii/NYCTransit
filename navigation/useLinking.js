@@ -19,7 +19,15 @@ export default function(containerRef) {
           }
         }
       },
-      Train: "trains",
+      Train:{
+        path: "Trains",
+        initialRouteName: "Trains",
+        screens: {
+          Trains: "train",
+          SingleTrain: "singleTrain",
+          SingleStation: "SingleStation"
+        }
+      },
       Map: "settings"
     },
   });

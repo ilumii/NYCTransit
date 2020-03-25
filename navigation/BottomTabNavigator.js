@@ -74,15 +74,15 @@ export default function App() {
     return (
       <MyStack.Navigator>
         <MyStack.Screen
-          name={"Trains"}
+          name="Trains"
           component={AllTrains}
         />
         <MyStack.Screen
-          name={"SingleTrain"}
+          name="SingleTrain"
           component={SingleTrain}
         />
         <MyStack.Screen
-          name={"SingleStation"}
+          name="SingleStation"
           component={SingleStation}
         />
       </MyStack.Navigator>
