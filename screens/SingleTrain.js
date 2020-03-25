@@ -2,19 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import TrainStops from '../assets/data/trainStops';
+import Images from '../assets/images';
 
 export default function SingleTrain({
 	navigation,
 	route,
 }) {
-	const [title, setTitle] = useState('LasdasdasdasdasdasdasdasdasdN')
 
-	SingleTrain.navigationOptions = () => ({
-		title
-	});
 	useEffect(() => {
-		navigation.setParams({ title });
+		navigation.setOptions({ title: route.params?.train + " Train" });
 	}, []);
+
 	const currentTrain = route.params?.train;
 	return (
 		<ScrollView>
@@ -22,7 +20,7 @@ export default function SingleTrain({
 				<ListItem
 					onPress={() => navigation.navigate('SingleStation', { station: value })}
 					key={key}
-					leftAvatar={{ source: require('../assets/images/A.png') }}
+					// leftAvatar={{ source: Images[currentTrain] }}
 					title={value}
 					bottomDivider
 					chevron
