@@ -19,7 +19,8 @@ export default function(containerRef) {
           }
         }
       },
-      Settings: "settings"
+      Train: "trains",
+      Map: "settings"
     },
   });
 }

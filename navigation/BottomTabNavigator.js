@@ -5,9 +5,11 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from '../components/TabBarIcon';
 
 import HomeScreen from '../screens/HomeScreen'
-const INITIAL_ROUTE_NAME = 'Home';
+import AllTrains from '../screens/AllTrains';
+import SingleTrain from '../screens/SingleTrain';
 
 export default function App() {
+  const INITIAL_ROUTE_NAME = 'Home';
 
   function Home({ navigation }) {
     return (
@@ -56,29 +58,60 @@ export default function App() {
 
     return (
       <MyStack.Navigator>
-        <MyStack.Screen name="Home" component={HomeScreen} />
+        <MyStack.Screen
+          name="Home"
+          component={HomeScreen}
+        />
         <MyStack.Screen name="Profile" component={Home} />
       </MyStack.Navigator>
     );
   };
-  const MyTabs = createBottomTabNavigator();
 
+  const TrainStack = () => {
+    const MyStack = createStackNavigator();
+
+    return (
+      <MyStack.Navigator>
+        <MyStack.Screen
+          name={"Trains"}
+          component={AllTrains}
+        />
+        <MyStack.Screen
+          name={"SingleTrain"}
+          component={SingleTrain}
+        />
+      </MyStack.Navigator>
+    )
+  }
+
+  const MyTabs = createBottomTabNavigator();
   return (
-    <MyTabs.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
-      <MyTabs.Screen 
-      name="HomeStack" 
-      component={HomeStack} 
-      options={{
-        title: 'Get Started',
-        tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
-      }}
+    <MyTabs.Navigator
+      initialRouteName={INITIAL_ROUTE_NAME}
+      tabBarOptions={{ showLabel: false }}
+    >
+      <MyTabs.Screen
+        name="HomeStack"
+        component={HomeStack}
+        options={{
+          title: 'Home',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-home" />,
+        }}
       />
       <MyTabs.Screen
-        name="Settings"
+        name="Train"
+        component={TrainStack}
+        options={{
+          title: 'Resources',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-train" />,
+        }}
+      />
+      <MyTabs.Screen
+        name="Map"
         component={Settings}
         options={{
           title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-navigate" />,
         }}
       />
     </MyTabs.Navigator>
