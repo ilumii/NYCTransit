@@ -7,6 +7,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen'
 import AllTrains from '../screens/AllTrains';
 import SingleTrain from '../screens/SingleTrain';
+import SingleStation from '../screens/SingleStation';
 
 export default function App() {
   const INITIAL_ROUTE_NAME = 'Home';
@@ -79,6 +80,10 @@ export default function App() {
         <MyStack.Screen
           name={"SingleTrain"}
           component={SingleTrain}
+        />
+        <MyStack.Screen
+          name={"SingleStation"}
+          component={SingleStation}
         />
       </MyStack.Navigator>
     )
