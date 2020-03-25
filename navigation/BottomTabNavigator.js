@@ -1,47 +1,119 @@
-import * as React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React from "react";
+import { View, Text, Button } from "react-native";
+import { createStackNavigator } from "@react-navigation/stack";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import TabBarIcon from '../components/TabBarIcon';
-import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
 
-const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Home';
+import HomeScreen from '../screens/HomeScreen'
+import AllTrains from '../screens/AllTrains';
+import SingleTrain from '../screens/SingleTrain';
 
-export default function BottomTabNavigator({ navigation, route }) {
-  // Set the header title on the parent stack navigator depending on the
-  // currently active tab. Learn more in the documentation:
-  // https://reactnavigation.org/docs/en/screen-options-resolution.html
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+export default function App() {
+  const INITIAL_ROUTE_NAME = 'Home';
 
+  function Home({ navigation }) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>her</Text>
+        <Button
+          title="Go to Wojciech's profile"
+          onPress={() =>
+            navigation.navigate("Home", { id: "Wojciech", age: 22 })
+          }
+        />
+        <Button
+          title="Go to unknown profile"
+          onPress={() => navigation.navigate("Profile")}
+        />
+      </View>
+    );
+  }
+
+  function Profile({ route }) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Hello {route.params?.id || "Unknown"}!</Text>
+        <Text>
+          Type of age parameter is{" "}
+          {route.params?.age ? typeof route.params.age : "undefined"}
+        </Text>
+      </View>
+    );
+  }
+
+  function Settings({ route, navigation }) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text>Hello {route.params?.id || "Unknown"}!</Text>
+        <Text>
+          Type of age parameter is{" "}
+          {route.params?.age ? route.params.age : "undefined"}
+        </Text>
+      </View>
+    );
+  }
+
+  const HomeStack = () => {
+    const MyStack = createStackNavigator();
+
+    return (
+      <MyStack.Navigator>
+        <MyStack.Screen
+          name="Home"
+          component={HomeScreen}
+        />
+        <MyStack.Screen name="Profile" component={Home} />
+      </MyStack.Navigator>
+    );
+  };
+
+  const TrainStack = () => {
+    const MyStack = createStackNavigator();
+
+    return (
+      <MyStack.Navigator>
+        <MyStack.Screen
+          name={"Trains"}
+          component={AllTrains}
+        />
+        <MyStack.Screen
+          name={"SingleTrain"}
+          component={SingleTrain}
+        />
+      </MyStack.Navigator>
+    )
+  }
+
+  const MyTabs = createBottomTabNavigator();
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
-      <BottomTab.Screen
-        name="Home"
-        component={HomeScreen}
+    <MyTabs.Navigator
+      initialRouteName={INITIAL_ROUTE_NAME}
+      tabBarOptions={{ showLabel: false }}
+    >
+      <MyTabs.Screen
+        name="HomeStack"
+        component={HomeStack}
         options={{
-          title: 'Get Started',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-code-working" />,
+          title: 'Home',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-home" />,
         }}
       />
-      <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
+      <MyTabs.Screen
+        name="Train"
+        component={TrainStack}
         options={{
           title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-train" />,
         }}
       />
-    </BottomTab.Navigator>
+      <MyTabs.Screen
+        name="Map"
+        component={Settings}
+        options={{
+          title: 'Resources',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-navigate" />,
+        }}
+      />
+    </MyTabs.Navigator>
   );
-}
-
-function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-  switch (routeName) {
-    case 'Home':
-      return 'How to get started';
-    case 'Links':
-      return 'Links to learn more';
-  }
 }
