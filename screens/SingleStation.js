@@ -13,7 +13,7 @@ export default function SingleStation({
 	useEffect(() => {
 		navigation.setOptions({ title: route.params?.station });
 		getTrainTimes();
-	}, []);
+	}, [route.params?.station]);
 
 	getTrainTimes = async () => {
 		let { data } = await axios.get(`http://node-express-env.hfrpwhjwwy.us-east-2.elasticbeanstalk.com/trains/${route.params?.station}`);

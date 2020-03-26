@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { NavigationActions } from "react-navigation";
 import axios from 'axios';
 import Images from '../assets/images';
+import Loading from '../components/Loading';
 
 export default function HomeScreen({
   navigation
@@ -49,29 +49,34 @@ export default function HomeScreen({
           bottomDivider
         />
         <ScrollView>
-          {nearBy.map((station, i) => {
-            let allTrainImages = [];
-            for (let train in station["dayTimeRoutes"].split(' ')) {
-              allTrainImages.push(
-                <Image key={train} source={Images[station["dayTimeRoutes"].split(' ')[train]]} style={styles.Avatar} />
+          {nearBy.length > 0 ?
+            nearBy.map((station, i) => {
+              let allTrainImages = [];
+              for (let train in station["dayTimeRoutes"].split(' ')) {
+                allTrainImages.push(
+                  <Image key={train} source={Images[station["dayTimeRoutes"].split(' ')[train]]} style={styles.Avatar} />
+                )
+              }
+              return (
+                <ListItem
+                  onPress={() =>
+                    navigation.navigate('Train', { screen: 'SingleStation', params: { station: station["stopName"] } })}
+                  key={i}
+                  leftAvatar={
+                    <View style={styles.ListItem}>
+                      {allTrainImages}
+                    </View>
+                  }
+                  title={station["stopName"]}
+                  titleStyle={styles.ListItemTitle}
+                  bottomDivider
+                />
               )
-            }
-            return (
-              <ListItem
-                onPress={() =>
-                  navigation.navigate('Train', { screen: 'SingleStation', params: { station: station["stopName"] } })}
-                key={i}
-                leftAvatar={
-                  <View style={styles.ListItem}>
-                    {allTrainImages}
-                  </View>
-                }
-                title={station["stopName"]}
-                titleStyle={styles.ListItemTitle}
-                bottomDivider
-              />
-            )
-          })}
+            }) :
+            <View style={styles.Loading}>
+              <Loading />
+            </View>
+          }
         </ScrollView>
       </View>
       <View style={styles.SubContainer} >
@@ -80,29 +85,34 @@ export default function HomeScreen({
           bottomDivider
         />
         <ScrollView>
-          {nearBy.map((station, i) => {
-            let allTrainImages = [];
-            for (let train in station["dayTimeRoutes"].split(' ')) {
-              allTrainImages.push(
-                <Image key={train} source={Images[station["dayTimeRoutes"].split(' ')[train]]} style={styles.Avatar} />
+          {nearBy.length > 0 ?
+            nearBy.map((station, i) => {
+              let allTrainImages = [];
+              for (let train in station["dayTimeRoutes"].split(' ')) {
+                allTrainImages.push(
+                  <Image key={train} source={Images[station["dayTimeRoutes"].split(' ')[train]]} style={styles.Avatar} />
+                )
+              }
+              return (
+                <ListItem
+                  onPress={() =>
+                    navigation.navigate('Train', { screen: 'SingleStation', params: { station: station["stopName"] } })}
+                  key={i}
+                  leftAvatar={
+                    <View style={styles.ListItem}>
+                      {allTrainImages}
+                    </View>
+                  }
+                  title={station["stopName"]}
+                  titleStyle={styles.ListItemTitle}
+                  bottomDivider
+                />
               )
-            }
-            return (
-              <ListItem
-                onPress={() =>
-                  navigation.navigate('Train', { screen: 'SingleStation', params: { station: station["stopName"] } })}
-                key={i}
-                leftAvatar={
-                  <View style={styles.ListItem}>
-                    {allTrainImages}
-                  </View>
-                }
-                title={station["stopName"]}
-                titleStyle={styles.ListItemTitle}
-                bottomDivider
-              />
-            )
-          })}
+            }) :
+            <View style={styles.Loading}>
+              <Loading />
+            </View>
+          }
         </ScrollView>
       </View>
     </View>
@@ -120,6 +130,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginLeft: 10,
     marginRight: 10,
+  },
+  Loading: {
+    height: 158.2,
+    backgroundColor: 'white'
   },
   ListItem: {
     flexDirection: "row"

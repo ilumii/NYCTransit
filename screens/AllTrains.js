@@ -24,7 +24,7 @@ export default function AllTrains({
 
 const styles = StyleSheet.create({
 	Avatar: {
-		height: 45, 
-		width: 45,
+		height: 40, 
+		width: 40,
 	},
 });
