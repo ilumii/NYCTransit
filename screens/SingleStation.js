@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, Platform, StyleSheet, Text, TouchableOpacity, View, Button, ScrollView } from 'react-native';
+import { Image, StyleSheet, ScrollView } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import axios from 'axios';
 import Images from '../assets/images';
@@ -9,11 +9,11 @@ export default function SingleStation({
 	route,
 }) {
 	const [data, setData] = useState([]);
-	
+
 	useEffect(() => {
 		navigation.setOptions({ title: route.params?.station });
 		getTrainTimes();
-	}, []);
+	}, [route.params?.station]);
 
 	getTrainTimes = async () => {
 		let { data } = await axios.get(`http://node-express-env.hfrpwhjwwy.us-east-2.elasticbeanstalk.com/trains/${route.params?.station}`);
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 	},
 	Avatar: {
-		height: 50, 
-		width: 50,
+		height: 45, 
+		width: 45,
 	},
 });
 

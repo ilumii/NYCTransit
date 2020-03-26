@@ -8,6 +8,7 @@ import HomeScreen from '../screens/HomeScreen'
 import AllTrains from '../screens/AllTrains';
 import SingleTrain from '../screens/SingleTrain';
 import SingleStation from '../screens/SingleStation';
+import Lottie from '../components/Loading';
 
 export default function App() {
   const INITIAL_ROUTE_NAME = 'Home';
@@ -74,15 +75,15 @@ export default function App() {
     return (
       <MyStack.Navigator>
         <MyStack.Screen
-          name={"Trains"}
+          name="Trains"
           component={AllTrains}
         />
         <MyStack.Screen
-          name={"SingleTrain"}
+          name="SingleTrain"
           component={SingleTrain}
         />
         <MyStack.Screen
-          name={"SingleStation"}
+          name="SingleStation"
           component={SingleStation}
         />
       </MyStack.Navigator>
@@ -113,7 +114,7 @@ export default function App() {
       />
       <MyTabs.Screen
         name="Map"
-        component={Settings}
+        component={Lottie}
         options={{
           title: 'Resources',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-navigate" />,
