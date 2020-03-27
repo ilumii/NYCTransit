@@ -22,52 +22,32 @@ export default function SingleStation({
 
 	return (
 		<ScrollView>
-			<ScrollView style={styles.Container}>
-				<ListItem
-					title={'Uptown'}
-					titleStyle={styles.Direction}
-					bottomDivider
-				/>
-				{data.map((train, i) => {
-					if (train["North"][0] !== undefined) {
-						let nextTrain = train["North"][0] < 1 ? "Now" : train["North"][0] == 1 ? `in ${train["North"][0]} minute` : `in ${train["North"][0]} minutes`;
-						let futureTrain;
-						if (train["North"][1]) futureTrain = train["North"][1]
-						if (train["North"][2]) futureTrain += `, ${train["North"][2]}`
-						return (
-							<ListItem
-								key={i}
-								leftAvatar={<Image source={Images[train["TrainNumber"]]} style={styles.Avatar} />}
-								rightSubtitle={`Arriving ${nextTrain} \n${futureTrain}`}
-								bottomDivider
-							/>
-						)
-					}
-				})}
-			</ScrollView>
-			<ScrollView style={styles.Container}>
-				<ListItem
-					title={'Downtown'}
-					titleStyle={styles.Direction}
-					bottomDivider
-				/>
-				{data.map((train, i) => {
-					if (train["South"][0] !== undefined) {
-						let nextTrain = train["South"][0] < 1 ? "Now" : train["South"][0] == 1 ? `Arriving in ${train["South"][0]} minute` : `Arriving in ${train["South"][0]} minutes`;
-						let futureTrain;
-						if (train["South"][1]) futureTrain = train["South"][1] + ' Mins';
-						if (train["South"][2]) futureTrain += `, ${train["South"][2]} Mins`
-						return (
-							<ListItem
-								key={i}
-								leftAvatar={<Image source={Images[train["TrainNumber"]]} style={styles.Avatar} />}
-								rightElement={<Text style={styles.RightSub}>{`${nextTrain} \n ${futureTrain}`}</Text>}
-								bottomDivider
-							/>
-						)
-					}
-				})}
-			</ScrollView>
+			{['Uptown', 'Downtown'].map(side => {
+				const bound = side === 'Uptown' ? 'North' : 'South';
+				return <ScrollView style={styles.Container}>
+					<ListItem
+						title={side}
+						titleStyle={styles.Direction}
+						bottomDivider
+					/>
+					{data.map((train, i) => {
+						if (train[bound][0] !== undefined) {
+							let nextTrain = train[bound][0] < 1 ? "Now" : train[bound][0] == 1 ? `Arriving in ${train[bound][0]} minute` : `Arriving in ${train[bound][0]} minutes`;
+							let futureTrain;
+							if (train[bound][1]) futureTrain = train[bound][1] + ' Mins';
+							if (train[bound][2]) futureTrain += `, ${train[bound][2]} Mins`
+							return (
+								<ListItem
+									key={i}
+									leftAvatar={<Image source={Images[train["TrainNumber"]]} style={styles.Avatar} />}
+									rightElement={<Text style={styles.RightSub}>{`${nextTrain} \n ${futureTrain}`}</Text>}
+									bottomDivider
+								/>
+							)
+						}
+					})}
+				</ScrollView>
+			})}
 		</ScrollView>
 	);
 }
@@ -87,7 +67,7 @@ const styles = StyleSheet.create({
 		width: 45,
 	},
 	RightSub: {
-		textAlign : 'right',
+		textAlign: 'right',
 	}
 });
 
