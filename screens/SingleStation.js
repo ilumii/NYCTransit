@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Image, StyleSheet, ScrollView } from 'react-native';
+import { Image, StyleSheet, ScrollView, Text } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import axios from 'axios';
 import Images from '../assets/images';
@@ -32,8 +32,8 @@ export default function SingleStation({
 					if (train["North"][0] !== undefined) {
 						let nextTrain = train["North"][0] < 1 ? "Now" : train["North"][0] == 1 ? `in ${train["North"][0]} minute` : `in ${train["North"][0]} minutes`;
 						let futureTrain;
-						if(train["North"][1]) futureTrain = train["North"][1]
-						if(train["North"][2]) futureTrain += `, ${train["North"][2]}`
+						if (train["North"][1]) futureTrain = train["North"][1]
+						if (train["North"][2]) futureTrain += `, ${train["North"][2]}`
 						return (
 							<ListItem
 								key={i}
@@ -53,15 +53,15 @@ export default function SingleStation({
 				/>
 				{data.map((train, i) => {
 					if (train["South"][0] !== undefined) {
-						let nextTrain = train["South"][0] < 1 ? "Now" : train["South"][0] == 1 ? `in ${train["South"][0]} minute` : `in ${train["South"][0]} minutes`;
+						let nextTrain = train["South"][0] < 1 ? "Now" : train["South"][0] == 1 ? `Arriving in ${train["South"][0]} minute` : `Arriving in ${train["South"][0]} minutes`;
 						let futureTrain;
-						if(train["South"][1]) futureTrain = train["South"][1]
-						if(train["South"][2]) futureTrain += `, ${train["South"][2]}`
+						if (train["South"][1]) futureTrain = train["South"][1] + ' Mins';
+						if (train["South"][2]) futureTrain += `, ${train["South"][2]} Mins`
 						return (
 							<ListItem
 								key={i}
 								leftAvatar={<Image source={Images[train["TrainNumber"]]} style={styles.Avatar} />}
-								rightSubtitle={`Arriving ${nextTrain} \n${futureTrain}`}
+								rightElement={<Text style={styles.RightSub}>{`${nextTrain} \n ${futureTrain}`}</Text>}
 								bottomDivider
 							/>
 						)
@@ -83,8 +83,11 @@ const styles = StyleSheet.create({
 		fontSize: 18,
 	},
 	Avatar: {
-		height: 45, 
+		height: 45,
 		width: 45,
 	},
+	RightSub: {
+		textAlign : 'right',
+	}
 });
 
